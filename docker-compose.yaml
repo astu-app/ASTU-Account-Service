@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  AccountDataService:
+    restart: on-failure
+    container_name: AccountDataService
+    build:
+      context: .
+    image: astu/account-data-service:v1
+    ports:
+      - "8080:8080"
+    links:
+      - AccountDataDB:db
+    depends_on:
+      AccountDataDB:
+        condition: service_healthy
+    env_file:
+      - .env
+
+  AccountDataDB:
+    restart: on-failure
+    container_name: accountDataDb
+    image: postgres:alpine
+    env_file:
+      - .env
+    volumes:
+      - ./data/account-data-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
