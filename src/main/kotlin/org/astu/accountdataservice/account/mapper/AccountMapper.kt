@@ -17,6 +17,10 @@ import org.mapstruct.Mappings
 @Mapper(componentModel = "spring")
 interface AccountMapper {
 
+    @Mappings(
+        Mapping(target = "admin", ignore = true),
+        Mapping(target = "id", ignore = true),
+    )
     fun toEntity(addAccountRequest: AddAccountRequest): Account
     fun toSummaryDto(account: Account): SummaryAccountDTO
 

@@ -3,11 +3,12 @@ services:
   AccountDataService:
     restart: on-failure
     container_name: AccountDataService
+    hostname: account-service
+    ports:
+      - "8086:80"
     build:
       context: .
     image: astu/account-data-service:v1
-    ports:
-      - "8080:8080"
     links:
       - AccountDataDB:db
     depends_on:
@@ -15,14 +16,31 @@ services:
         condition: service_healthy
     env_file:
       - .env
+    networks:
+      - services-network
+      - account-network
+
 
   AccountDataDB:
     restart: on-failure
     container_name: accountDataDb
+    hostname: accountDataDb
     image: postgres:alpine
+    ports:
+      - "5435:5432"
+    networks:
+      - account-network
     env_file:
       - .env
     volumes:
       - ./data/account-data-db:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+
+networks:
+  account-network:
+    driver: bridge
+
+  services-network:
+    external:
+      name: private-astu-services-network

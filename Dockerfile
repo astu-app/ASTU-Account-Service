@@ -7,12 +7,13 @@ COPY . .
 
 RUN gradle :bootJar
 
-FROM openjdk:19-slim
+FROM eclipse-temurin:19-jre-alpine
 
 ARG JAR_FILE=/opt/app/build/libs/AccountDataService-*.jar
+ENV JAVA_TOOL_OPTIONS=''
 
 WORKDIR /opt/app
 
 COPY --from=BUILD ${JAR_FILE} app.jar
 
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT java -jar app.jar

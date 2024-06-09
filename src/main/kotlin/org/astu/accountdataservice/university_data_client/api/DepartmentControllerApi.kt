@@ -30,7 +30,7 @@ class DepartmentControllerApi(
      * @return DepartmentDto
      */
     suspend fun addDepartment(body: AddDepartmentRequest): DepartmentDto {
-        val response = httpClient.post("$basePath/api/departments") {
+        val response = httpClient.post("${basePath}api/departments") {
             setBody(body)
         }
         return when (response.status) {
@@ -45,7 +45,7 @@ class DepartmentControllerApi(
      * @return kotlin.Array<DepartmentDto>
      */
     suspend fun getDepartments(): List<DepartmentDto> {
-        val response = httpClient.get("$basePath/api/departments")
+        val response = httpClient.get("${basePath}api/departments")
         return when (response.status) {
             HttpStatusCode.OK -> response.body<List<DepartmentDto>>()
             else -> throw IllegalStateException("${response.status}")

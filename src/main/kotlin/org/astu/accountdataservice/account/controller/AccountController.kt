@@ -4,6 +4,7 @@ import org.astu.accountdataservice.account.AccountService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
@@ -13,7 +14,7 @@ import java.util.*
 class AccountController(private val accountService: AccountService) {
 
     @PostMapping
-    suspend fun createAccount(request: AddAccountRequest): UUID = accountService.addAccount(request)
+    suspend fun createAccount(@RequestBody request: AddAccountRequest): UUID = accountService.addAccount(request)
 
     @GetMapping
     fun getAllAccounts(): List<SummaryAccountDTO> = accountService.getAccounts()

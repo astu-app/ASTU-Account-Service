@@ -30,7 +30,7 @@ class BuildingControllerApi(
      * @return BuildingDTO
      */
     suspend fun createBuilding(body: AddBuildingRequest): BuildingDTO {
-        val response = httpClient.post("$basePath/api/buildings") {
+        val response = httpClient.post("${basePath}api/buildings") {
             setBody(body)
         }
         return when (response.status) {
@@ -45,7 +45,7 @@ class BuildingControllerApi(
      * @return kotlin.Array<BuildingDTO>
      */
     suspend fun getBuildings(): List<BuildingDTO> {
-        val response = httpClient.get("$basePath/api/buildings")
+        val response = httpClient.get("${basePath}api/buildings")
         return when (response.status) {
             HttpStatusCode.OK -> response.body<List<BuildingDTO>>()
             else -> throw IllegalStateException("${response.status}")

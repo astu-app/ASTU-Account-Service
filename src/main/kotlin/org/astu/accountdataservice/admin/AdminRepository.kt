@@ -1,10 +1,10 @@
-package org.astu.accountdataservice.student
+package org.astu.accountdataservice.admin
 
-import org.astu.accountdataservice.student.model.Student
+import org.astu.accountdataservice.admin.model.Admin
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface StudentRepository : JpaRepository<Student, UUID>, JpaSpecificationExecutor<Student>
+interface AdminRepository : JpaRepository<Admin, UUID>, JpaSpecificationExecutor<Admin>

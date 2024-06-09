@@ -6,3 +6,9 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME:azimusma}
     password: ${SPRING_DATASOURCE_PASSWORD:azimusma}
     driver-class-name: org.postgresql.Driver
+server:
+  tomcat:
+    threads:
+      max: 4
+service:
+  url: ${UNI_SERVICE_URL:http://localhost:8080}

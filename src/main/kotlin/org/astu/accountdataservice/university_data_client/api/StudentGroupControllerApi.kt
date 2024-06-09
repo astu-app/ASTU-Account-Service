@@ -30,7 +30,7 @@ class StudentGroupControllerApi(
      * @return StudentGroupDto
      */
     suspend fun addStudentGroup(body: AddStudentGroupRequest): StudentGroupDto {
-        val response = httpClient.post("$basePath/api/student-groups") {
+        val response = httpClient.post("${basePath}api/student-groups") {
             setBody(body)
         }
         return when (response.status) {
@@ -45,7 +45,7 @@ class StudentGroupControllerApi(
      * @return kotlin.Array<StudentGroupDto>
      */
     suspend fun getAllStudentGroups(): List<StudentGroupDto> {
-        val response = httpClient.get("$basePath/api/student-groups")
+        val response = httpClient.get("${basePath}api/student-groups")
         return when (response.status) {
             HttpStatusCode.OK -> response.body<List<StudentGroupDto>>()
             else -> throw IllegalStateException("${response.status}")
