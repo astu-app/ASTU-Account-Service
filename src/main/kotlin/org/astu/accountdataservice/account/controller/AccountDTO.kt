@@ -44,19 +44,7 @@ class AccountDTO(
     @set:JvmName("setIsTeacher")
     var isTeacher: Boolean,
 
-    /**
-     * Информация о работнике АГТУ
-     */
-    val employeeInfo: EmployeeDTO? = null,
-
-    /**
-     * Информация о студенте АГТУ
-     */
-    val studentInfo: StudentDTO? = null,
-
-    /**
-     * Информация о преподавателе АГТУ
-     */
-    val teacherInfo: TeacherDTO? = null,
+    val departmentId: UUID? = null,
+    val studentGroupId: UUID? = null
 
     )
