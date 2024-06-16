@@ -1,7 +1,5 @@
 package org.astu.accountdataservice.student
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.astu.accountdataservice.account.controller.AccountDTO
 import org.astu.accountdataservice.account.controller.AddStudentRequest
 import org.astu.accountdataservice.account.mapper.AccountMapperImpl
@@ -16,20 +14,19 @@ class StudentService(
     private val studentGroupDatasource: StudentGroupDataSource,
     private val accountMapper: AccountMapperImpl
 ) {
-    suspend fun addStudent(account: Account, it: AddStudentRequest) {
-        val studentGroupId = studentGroupDatasource.getStudentGroupId(it.studentGroup)
-        val student = Student(account = account, studentGroupId = studentGroupId)
-        withContext(Dispatchers.IO) {
-            studentRepository.save(student)
-        }
+    fun addStudent(account: Account, it: AddStudentRequest) {
+//        val studentGroupId = studentGroupDatasource.getStudentGroupId(it.studentGroup)
+//        val student = Student(account = account, studentGroupId = studentGroupId)
+        val id = UUID.fromString(it.studentGroupId)
+        val student = Student(account = account, studentGroupId = id)
+        studentRepository.save(student)
     }
 
-    suspend fun getStudent(studentId: UUID): AccountDTO {
+    fun getStudent(studentId: UUID): AccountDTO {
         return accountMapper.toDto(
-            withContext(Dispatchers.IO) {
-                studentRepository
-                    .findById(studentId)
-            }.orElseThrow { Exception() }
+            studentRepository
+                .findById(studentId)
+                .orElseThrow { Exception() }
                 .account
         )
     }

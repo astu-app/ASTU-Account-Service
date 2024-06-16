@@ -12,7 +12,7 @@ import java.util.*
 @RequestMapping("api/student")
 class StudentController(private val studentService: StudentService) {
     @GetMapping("{id}")
-    suspend fun getStudent(@PathVariable id: UUID): AccountDTO {
+    fun getStudent(@PathVariable id: UUID): AccountDTO {
         return studentService.getStudent(id)
     }
 }

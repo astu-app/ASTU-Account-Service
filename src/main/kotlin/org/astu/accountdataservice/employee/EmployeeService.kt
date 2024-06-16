@@ -1,8 +1,5 @@
 package org.astu.accountdataservice.employee
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.withContext
 import org.astu.accountdataservice.account.controller.AccountDTO
 import org.astu.accountdataservice.account.controller.AddEmployeeRequest
 import org.astu.accountdataservice.account.mapper.AccountMapper
@@ -16,21 +13,18 @@ class EmployeeService(
     val departmentDataSource: DepartmentDataSource,
     private val employeeRepository: EmployeeRepository, private val accountMapper: AccountMapper
 ) {
-    suspend fun addEmployee(account: Account, employeeInfo: AddEmployeeRequest) {
-        val departmentId = departmentDataSource.getDepartmentId(employeeInfo.department)
-        val employee = Employee(account = account, role = employeeInfo.role, departmentId = departmentId)
-        withContext(Dispatchers.IO) {
-            employeeRepository.save(employee)
-        }
+    fun addEmployee(account: Account, employeeInfo: AddEmployeeRequest) {
+//        val departmentId = departmentDataSource.getDepartmentId(employeeInfo.department)
+//        val employee = Employee(account = account, role = employeeInfo.role, departmentId = departmentId)
+        val id = UUID.fromString(employeeInfo.departmentId)
+        val employee = Employee(account = account, role = employeeInfo.role, departmentId = id)
+        employeeRepository.save(employee)
     }
 
-    suspend fun getEmployee(departmentId: UUID, employeeId: UUID): AccountDTO {
+    fun getEmployee(departmentId: UUID, employeeId: UUID): AccountDTO {
         return accountMapper.toDto(
-            withContext(Dispatchers.IO) {
-                employeeRepository
-                    .findByIdAndDepartmentId(employeeId, departmentId)
-            }.orElseThrow { Exception() }
-                .account
+            employeeRepository
+                .findByIdAndDepartmentId(employeeId, departmentId).orElseThrow().account
         )
     }
 }

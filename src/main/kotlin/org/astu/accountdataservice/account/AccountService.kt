@@ -1,7 +1,5 @@
 package org.astu.accountdataservice.account
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.astu.accountdataservice.account.controller.AccountDTO
 import org.astu.accountdataservice.account.controller.AddAccountRequest
 import org.astu.accountdataservice.account.controller.SummaryAccountDTO
@@ -24,16 +22,14 @@ class AccountService(
     private val accountMapper: AccountMapper
 ) {
 
-    suspend fun addAccount(addAccountRequest: AddAccountRequest): UUID {
+    fun addAccount(addAccountRequest: AddAccountRequest): UUID {
         val account = Account(
             firstName = addAccountRequest.firstName,
             secondName = addAccountRequest.secondName,
             patronymic = addAccountRequest.patronymic
         )
 
-        val createdAccount = withContext(Dispatchers.IO) {
-            accountRepository.save(account)
-        }
+        val createdAccount = accountRepository.save(account)
         addAccountRequest.employeeInfo?.let {
             runCatching {
                 employeeService.addEmployee(createdAccount, it)

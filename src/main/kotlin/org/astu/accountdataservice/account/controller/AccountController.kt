@@ -14,7 +14,7 @@ import java.util.*
 class AccountController(private val accountService: AccountService) {
 
     @PostMapping
-    suspend fun createAccount(@RequestBody request: AddAccountRequest): UUID = accountService.addAccount(request)
+    fun createAccount(@RequestBody request: AddAccountRequest): UUID = accountService.addAccount(request)
 
     @GetMapping
     fun getAllAccounts(): List<SummaryAccountDTO> = accountService.getAccounts()

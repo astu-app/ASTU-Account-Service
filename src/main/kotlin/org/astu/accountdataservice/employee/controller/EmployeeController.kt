@@ -13,7 +13,7 @@ import java.util.*
 class EmployeeController(private val employeeService: EmployeeService) {
 
     @GetMapping
-    suspend fun getEmployee(@RequestParam departmentId: UUID, @RequestParam employeeId: UUID): AccountDTO {
+    fun getEmployee(@RequestParam departmentId: UUID, @RequestParam employeeId: UUID): AccountDTO {
         return employeeService.getEmployee(departmentId, employeeId)
     }
 }
