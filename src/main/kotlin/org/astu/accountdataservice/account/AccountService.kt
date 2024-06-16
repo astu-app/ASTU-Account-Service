@@ -26,51 +26,28 @@ class AccountService(
         val account = Account(
             firstName = addAccountRequest.firstName,
             secondName = addAccountRequest.secondName,
-            patronymic = addAccountRequest.patronymic
+            patronymic = addAccountRequest.patronymic,
+            studentGroupId = addAccountRequest.studentGroupId,
+            departmentId = addAccountRequest.departmentId
         )
 
         val createdAccount = accountRepository.save(account)
-        addAccountRequest.employeeInfo?.let {
-            runCatching {
-                employeeService.addEmployee(createdAccount, it)
-            }.onFailure {
-                accountRepository.delete(createdAccount)
-                throw it
-            }
-        }
-
-        addAccountRequest.studentInfo?.let {
-            runCatching {
-                studentService.addStudent(createdAccount, it)
-            }.onFailure {
-                accountRepository.delete(createdAccount)
-                throw it
-            }
-        }
-
-        addAccountRequest.teacherInfo?.let {
-            runCatching {
-                teacherService.addTeacher(createdAccount, it)
-            }.onFailure {
-                accountRepository.delete(createdAccount)
-                throw it
-            }
-        }
-
-        if (addAccountRequest.isAdmin) {
-            runCatching {
-                adminService.addAdmin(createdAccount)
-            }.onFailure {
-                accountRepository.delete(createdAccount)
-                throw it
-            }
-        }
-
         return createdAccount.id
     }
 
     fun getAccounts(): List<SummaryAccountDTO> = accountRepository.findAll().map(accountMapper::toSummaryDto)
 
-    fun getAccount(id: UUID): AccountDTO =
-        accountMapper.toDto(accountRepository.findById(id).orElseThrow { Exception() })
+    fun getAccount(id: UUID): AccountDTO {
+        val account = accountRepository.findById(id).orElseThrow { Exception() }
+        return AccountDTO(
+            account.id,
+            account.firstName,
+            account.secondName,
+            account.patronymic,
+            account.departmentId != null,
+            account.studentGroupId != null,
+            isAdmin = false,
+            isTeacher = false
+        )
+    }
 }

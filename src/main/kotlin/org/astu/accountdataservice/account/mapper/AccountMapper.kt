@@ -17,22 +17,9 @@ import org.mapstruct.Mappings
 @Mapper(componentModel = "spring")
 interface AccountMapper {
 
-    @Mappings(
-        Mapping(target = "admin", ignore = true),
-        Mapping(target = "id", ignore = true),
-    )
     fun toEntity(addAccountRequest: AddAccountRequest): Account
     fun toSummaryDto(account: Account): SummaryAccountDTO
 
-    @Mappings(
-        Mapping(target = "isAdmin", expression = "java(account.getAdmin() != null)"),
-        Mapping(target = "isEmployee", expression = "java(account.getEmployee() != null)"),
-        Mapping(target = "isStudent", expression = "java(account.getStudent() != null)"),
-        Mapping(target = "isTeacher", expression = "java(account.getTeacher() != null)"),
-        Mapping(target = "studentInfo", expression = "java(toDto(account.getStudent()))"),
-        Mapping(target = "teacherInfo", expression = "java(toDto(account.getTeacher()))"),
-        Mapping(target = "employeeInfo", expression = "java(toDto(account.getEmployee()))"),
-    )
     fun toDto(account: Account): AccountDTO
 
     fun toDto(student: Student?): StudentDTO?

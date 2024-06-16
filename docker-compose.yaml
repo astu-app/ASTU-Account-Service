@@ -17,7 +17,7 @@ services:
     env_file:
       - .env
     networks:
-      - services-network
+#      - services-network
       - account-network
 
 
@@ -41,6 +41,6 @@ networks:
   account-network:
     driver: bridge
 
-  services-network:
-    external:
-      name: private-astu-services-network
+#  services-network:
+#    external:
+#      name: private-astu-services-network

@@ -2,7 +2,7 @@ package org.astu.accountdataservice.student
 
 import org.astu.accountdataservice.account.controller.AccountDTO
 import org.astu.accountdataservice.account.controller.AddStudentRequest
-import org.astu.accountdataservice.account.mapper.AccountMapperImpl
+import org.astu.accountdataservice.account.mapper.AccountMapper
 import org.astu.accountdataservice.account.model.Account
 import org.astu.accountdataservice.student.model.Student
 import org.springframework.stereotype.Service
@@ -12,7 +12,7 @@ import java.util.*
 class StudentService(
     private val studentRepository: StudentRepository,
     private val studentGroupDatasource: StudentGroupDataSource,
-    private val accountMapper: AccountMapperImpl
+    private val accountMapper: AccountMapper
 ) {
     fun addStudent(account: Account, it: AddStudentRequest) {
 //        val studentGroupId = studentGroupDatasource.getStudentGroupId(it.studentGroup)
