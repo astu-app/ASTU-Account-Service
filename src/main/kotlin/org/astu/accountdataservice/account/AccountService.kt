@@ -38,8 +38,7 @@ class AccountService(
     fun getAccounts(): List<SummaryAccountDTO> = accountRepository.findAll().map(accountMapper::toSummaryDto)
 
     fun getAccount(id: UUID): AccountDTO {
-        println("start")
-        val account = accountRepository.findAll().also { it.forEach  { println(it.id) }}.filter { it.id == id }.first()
+        val account = accountRepository.findAll().first { it.id == id }
 
         return AccountDTO(
             account.id,

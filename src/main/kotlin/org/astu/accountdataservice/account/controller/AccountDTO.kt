@@ -1,8 +1,5 @@
 package org.astu.accountdataservice.account.controller
 
-import org.astu.accountdataservice.employee.controller.EmployeeDTO
-import org.astu.accountdataservice.student.controller.StudentDTO
-import org.astu.accountdataservice.teacher.controller.TeacherDTO
 import java.util.*
 
 class AccountDTO(
@@ -47,4 +44,4 @@ class AccountDTO(
     val departmentId: UUID? = null,
     val studentGroupId: UUID? = null
 
-    )
+)
