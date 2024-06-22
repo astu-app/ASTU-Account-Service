@@ -2,11 +2,6 @@ package org.astu.accountdataservice.account.model
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
-import jakarta.persistence.OneToOne
-import org.astu.accountdataservice.admin.model.Admin
-import org.astu.accountdataservice.employee.model.Employee
-import org.astu.accountdataservice.student.model.Student
-import org.astu.accountdataservice.teacher.model.Teacher
 import java.util.*
 
 @Entity
@@ -25,5 +20,6 @@ class Account(
      */
     val patronymic: String? = null,
     val departmentId: UUID? = null,
-    val studentGroupId: UUID? = null
+    val studentGroupId: UUID? = null,
+    val admin: Boolean = false
 )

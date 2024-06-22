@@ -7,8 +7,10 @@ import org.astu.accountdataservice.account.mapper.AccountMapper
 import org.astu.accountdataservice.account.model.Account
 import org.astu.accountdataservice.admin.AdminService
 import org.astu.accountdataservice.employee.EmployeeService
+import org.astu.accountdataservice.exception.CommonException
 import org.astu.accountdataservice.student.StudentService
 import org.astu.accountdataservice.teacher.TeacherService
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -28,7 +30,8 @@ class AccountService(
             secondName = addAccountRequest.secondName,
             patronymic = addAccountRequest.patronymic,
             studentGroupId = addAccountRequest.studentGroupId,
-            departmentId = addAccountRequest.departmentId
+            departmentId = addAccountRequest.departmentId,
+            admin = addAccountRequest.isAdmin
         )
 
         val createdAccount = accountRepository.save(account)
@@ -38,7 +41,7 @@ class AccountService(
     fun getAccounts(): List<SummaryAccountDTO> = accountRepository.findAll().map(accountMapper::toSummaryDto)
 
     fun getAccount(id: UUID): AccountDTO {
-        val account = accountRepository.findAll().first { it.id == id }
+        val account = accountRepository.findById(id).orElseThrow { CommonException(HttpStatus.BAD_REQUEST, "Не удалось найти аккаунт с таким id") }
 
         return AccountDTO(
             account.id,
@@ -47,7 +50,7 @@ class AccountService(
             account.patronymic,
             account.departmentId != null,
             account.studentGroupId != null,
-            isAdmin = false,
+            isAdmin = account.admin,
             isTeacher = false,
             departmentId = account.departmentId,
             studentGroupId = account.studentGroupId

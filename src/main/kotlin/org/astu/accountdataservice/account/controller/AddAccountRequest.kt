@@ -16,6 +16,7 @@ class AddAccountRequest(
      */
     val patronymic: String? = null,
     val departmentId: UUID? = null,
-    val studentGroupId: UUID? = null
+    val studentGroupId: UUID? = null,
+    val isAdmin: Boolean = false
 )
 

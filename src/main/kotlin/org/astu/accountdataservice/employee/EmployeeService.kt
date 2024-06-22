@@ -14,8 +14,6 @@ class EmployeeService(
     private val employeeRepository: EmployeeRepository, private val accountMapper: AccountMapper
 ) {
     fun addEmployee(account: Account, employeeInfo: AddEmployeeRequest) {
-//        val departmentId = departmentDataSource.getDepartmentId(employeeInfo.department)
-//        val employee = Employee(account = account, role = employeeInfo.role, departmentId = departmentId)
         val id = UUID.fromString(employeeInfo.departmentId)
         val employee = Employee(account = account, role = employeeInfo.role, departmentId = id)
         employeeRepository.save(employee)

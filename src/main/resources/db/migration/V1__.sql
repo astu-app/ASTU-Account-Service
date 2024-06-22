@@ -5,6 +5,7 @@ CREATE TABLE account
     second_name VARCHAR(255),
     patronymic  VARCHAR(255),
     department_id UUID,
+    admin BOOLEAN,
     student_group_id UUID,
     CONSTRAINT pk_account PRIMARY KEY (id)
 );
